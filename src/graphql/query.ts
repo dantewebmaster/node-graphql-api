@@ -1,4 +1,4 @@
-import { commentQueries } from './resources/post/comment.schema';
+import { commentQueries } from './resources/comment/comment.schema';
 import { postQueries } from './resources/post/post.schema';
 import { userQueries } from './resources/user/user.schema';
 
