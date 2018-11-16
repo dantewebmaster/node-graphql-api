@@ -2,6 +2,6 @@ import * as Sequelize from "sequelize";
 
 import { ModelsInterface } from './ModelsInterface';
 
-export interface DbConnectionInterface {
+export interface DbConnection extends ModelsInterface {
   sequelize: Sequelize.Sequelize
 }
