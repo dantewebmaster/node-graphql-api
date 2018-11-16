@@ -4,6 +4,16 @@ import { DbConnection } from "../../../interfaces/DbConnectionInterface";
 import { UserInstance } from "../../../models/UserModel";
 
 export const userResolvers = {
+  User: {
+    posts: (user, { first = 10, offset = 0 }, { db }: { db: DbConnection }, info: GraphQLResolveInfo) => {
+      return db.Post
+        .findAll({
+          where: { author: user.get('id') },
+          limit: first,
+          offset: offset,
+        })
+    },
+  },
   Query: {
     users: (parent, { first = 10, offset = 0 }, { db }: { db: DbConnection }, info: GraphQLResolveInfo) => {
       return db.User
@@ -19,7 +29,7 @@ export const userResolvers = {
           if (!user) throw new Error(`User with id ${id} not found.`);
           return user;
         });
-    }
+    },
   },
   Mutation: {
     createUser: (parent, { input }, { db }: { db: DbConnection }, info: GraphQLResolveInfo) => {
@@ -59,9 +69,11 @@ export const userResolvers = {
           .then((user: UserInstance) => {
             if (!user) throw new Error(`User with id ${id} not found.`);
             return user.destroy({ transaction: t })
-              .then(user => !!user);
+              // TODO: Testar se essa joça funciona
+              // .then(user => !!user);
+              .then(user => Boolean(user));
           })
       })
-    }
-  }
+    },
+  },
 };
