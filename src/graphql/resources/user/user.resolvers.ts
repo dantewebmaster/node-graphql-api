@@ -71,7 +71,7 @@ export const userResolvers = {
             return user.destroy({ transaction: t })
               // TODO: Testar se essa joça funciona
               // .then(user => !!user);
-              .then(user => Boolean(user));
+              .then(user => !!Boolean(user));
           })
       })
     },
