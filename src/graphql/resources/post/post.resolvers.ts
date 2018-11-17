@@ -8,7 +8,7 @@ import { handleError } from '../../../utils/utils';
 export const postResolvers = {
 
   Post: {
-    author: (post, { id }, { db }: { db: DbConnection }, info: GraphQLResolveInfo) => {
+    author: (post, args, { db }: { db: DbConnection }, info: GraphQLResolveInfo) => {
       return db.User
         .findById(post.get('author'))
         .catch(handleError);
@@ -29,6 +29,7 @@ export const postResolvers = {
     },
 
     post: (parent, { id }, { db }: { db: DbConnection }, info: GraphQLResolveInfo) => {
+      id = parseInt(id);
       return db.Post
         .findById(id)
         .then((post: PostInstance) => {
