@@ -8,7 +8,7 @@ export const verifyTokenResolver: ComposableResolver<any, ResolverContext> =
   (resolver: GraphQLFieldResolver<any, ResolverContext>): GraphQLFieldResolver<any, ResolverContext> => {
     return (parent, args, context: ResolverContext, info) => {
       const token: string = context.authorization ? context.authorization.split(' ')[1] : undefined;
-      jwt.verify(token, JWT_SECRET, (err, decoded: any) => {
+      return jwt.verify(token, JWT_SECRET, (err, decoded: any) => {
         if (!err) {
           return resolver(parent, args, context, info);
         }
